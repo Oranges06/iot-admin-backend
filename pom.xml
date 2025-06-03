@@ -25,6 +25,7 @@
         <module>maku-cloud-gateway</module>
         <module>maku-cloud-app-api</module>
         <module>maku-cloud-app-framework</module>
+        <module>maku-cloud-app-framework</module>
     </modules>
 
     <properties>

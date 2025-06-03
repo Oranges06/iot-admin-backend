@@ -11,6 +11,11 @@
     <artifactId>maku-cloud-app-api</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <fastjson2-version>2.0.48</fastjson2-version>
+        <spring-integration-mqtt.version>6.4.4</spring-integration-mqtt.version>
+    </properties>
+
     <repositories>
         <repository>
             <id>minder</id>
@@ -58,6 +63,18 @@
             <version>4.4.0</version>
             <scope>compile</scope>
         </dependency>
+        <!-- Spring Integration MQTT ⽀持 -->
+        <dependency>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-mqtt</artifactId>
+            <version>${spring-integration-mqtt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson2-version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -3,7 +3,8 @@ package top.cry.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import top.cry.framework.common.utils.DateUtils;
+import top.dl.common.utils.DateUtils;
+
 
 import java.io.Serial;
 import java.io.Serializable;

@@ -2,7 +2,8 @@ package top.cry.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import top.cry.entity.Device;
-import top.cry.framework.mybatis.dao.BaseDao;
+import top.dl.mybatis.dao.BaseDao;
+
 
 import java.util.List;
 import java.util.Map;

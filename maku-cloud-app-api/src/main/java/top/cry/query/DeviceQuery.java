@@ -3,7 +3,8 @@ package top.cry.query;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import top.cry.framework.common.query.Query;
+import top.dl.common.query.Query;
+
 /**
  *@author cry
 **/

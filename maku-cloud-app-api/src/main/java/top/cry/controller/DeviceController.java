@@ -13,6 +13,9 @@ import top.cry.entity.Device;
 import top.cry.query.DeviceQuery;
 import top.cry.service.DeviceService;
 import top.cry.vo.DeviceVO;
+import top.dl.common.utils.PageResult;
+import top.dl.common.utils.Result;
+
 /**
  * 设备表
  *

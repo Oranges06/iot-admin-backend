@@ -9,10 +9,8 @@
 	<packaging>pom</packaging>
 
 	<modules>
-	    <module>maku-module-quartz</module>
-		<module>maku-module-monitor</module>
 		<module>maku-module-generator</module>
 		<module>maku-module-iot</module>
-    </modules>
+	</modules>
 
 </project>

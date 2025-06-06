@@ -44,6 +44,7 @@ public class TNewsServiceImpl extends BaseServiceImpl<TNewsDao, TNewsEntity> imp
 
     private LambdaQueryWrapper<TNewsEntity> getWrapper(TNewsQuery query){
         LambdaQueryWrapper<TNewsEntity> wrapper = Wrappers.lambdaQuery();
+        wrapper.like(ObjectUtil.isNotEmpty(query.getTitle()), TNewsEntity::getTitle, query.getTitle());
 
         return wrapper;
     }

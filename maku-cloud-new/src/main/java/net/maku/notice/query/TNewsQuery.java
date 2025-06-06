@@ -18,4 +18,7 @@ import java.time.LocalDateTime;;
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "资讯管理查询")
 public class TNewsQuery extends Query {
+    @Schema(description = "标题")
+    private String title;
+
 }

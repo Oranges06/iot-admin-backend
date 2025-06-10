@@ -3,6 +3,7 @@ package net.maku.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import net.maku.entity.Device;
 import net.maku.vo.DeviceStatisticsVO;
+import net.maku.vo.DeviceTypeStatisticsVO;
 
 /**
  * @author: minder
@@ -15,4 +16,10 @@ public interface DeviceService extends IService<Device> {
      * @return 设备统计数据
      */
     DeviceStatisticsVO getDeviceStatistics();
+    
+    /**
+     * 获取按设备类型分类的统计数据
+     * @return 设备类型统计数据
+     */
+    DeviceTypeStatisticsVO getDeviceTypeStatistics();
 }

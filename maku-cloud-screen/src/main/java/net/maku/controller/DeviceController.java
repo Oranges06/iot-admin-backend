@@ -8,6 +8,7 @@ import net.maku.entity.Device;
 import net.maku.framework.common.utils.Result;
 import net.maku.service.DeviceService;
 import net.maku.vo.DeviceStatisticsVO;
+import net.maku.vo.DeviceTypeStatisticsVO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,14 +23,21 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/device")
-@Tag(name="设备统计")
+@Tag(name="设备")
 public class DeviceController {
     private DeviceService deviceService;
     
     @GetMapping("/statistics")
-    @Operation(summary = "设备统计数据")
+    @Operation(summary = "设备状态总览")
     public Result<DeviceStatisticsVO> getDeviceStatistics() {
         DeviceStatisticsVO statistics = deviceService.getDeviceStatistics();
+        return Result.ok(statistics);
+    }
+    
+    @GetMapping("/type/statistics")
+    @Operation(summary = "设备类型统计")
+    public Result<DeviceTypeStatisticsVO> getDeviceTypeStatistics() {
+        DeviceTypeStatisticsVO statistics = deviceService.getDeviceTypeStatistics();
         return Result.ok(statistics);
     }
 }

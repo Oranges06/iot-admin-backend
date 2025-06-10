@@ -27,4 +27,7 @@ public class DeviceStatisticsVO implements Serializable {
 
     @Schema(description = "离线设备数")
     private Integer offlineCount;
+    
+    @Schema(description = "告警设备数")
+    private Integer alarmCount;
 }

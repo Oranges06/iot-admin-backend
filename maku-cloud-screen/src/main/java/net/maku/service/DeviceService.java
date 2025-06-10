@@ -22,4 +22,10 @@ public interface DeviceService extends IService<Device> {
      * @return 设备类型统计数据
      */
     DeviceTypeStatisticsVO getDeviceTypeStatistics();
+    
+    /**
+     * 获取设备统计数据（包含告警数）
+     * @return 设备统计数据（包含告警数）
+     */
+    DeviceStatisticsVO getDeviceStatisticsWithAlarms();
 }

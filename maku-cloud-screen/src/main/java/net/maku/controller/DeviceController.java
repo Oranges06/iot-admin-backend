@@ -40,4 +40,11 @@ public class DeviceController {
         DeviceTypeStatisticsVO statistics = deviceService.getDeviceTypeStatistics();
         return Result.ok(statistics);
     }
+    
+    @GetMapping("/statistics/with-alarms")
+    @Operation(summary = "设备状态总览（包含告警数）")
+    public Result<DeviceStatisticsVO> getDeviceStatisticsWithAlarms() {
+        DeviceStatisticsVO statistics = deviceService.getDeviceStatisticsWithAlarms();
+        return Result.ok(statistics);
+    }
 }

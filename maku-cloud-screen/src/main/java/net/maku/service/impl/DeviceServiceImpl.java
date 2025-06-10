@@ -2,11 +2,14 @@ package net.maku.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import net.maku.dao.DeviceDao;
+import net.maku.dao.DeviceOperationLogDao;
 import net.maku.entity.Device;
+import net.maku.entity.DeviceOperationLog;
 import net.maku.framework.mybatis.service.impl.BaseServiceImpl;
 import net.maku.service.DeviceService;
 import net.maku.vo.DeviceStatisticsVO;
 import net.maku.vo.DeviceTypeStatisticsVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +24,9 @@ import java.util.Map;
  **/
 @Service
 public class DeviceServiceImpl extends BaseServiceImpl<DeviceDao, Device> implements DeviceService {
+    
+    @Autowired
+    private DeviceOperationLogDao deviceOperationLogDao;
     
     @Override
     public DeviceStatisticsVO getDeviceStatistics() {
@@ -101,5 +107,24 @@ public class DeviceServiceImpl extends BaseServiceImpl<DeviceDao, Device> implem
         return DeviceTypeStatisticsVO.builder()
                 .items(items)
                 .build();
+    }
+    
+    @Override
+    public DeviceStatisticsVO getDeviceStatisticsWithAlarms() {
+        // 获取基本设备统计信息
+        DeviceStatisticsVO statistics = getDeviceStatistics();
+        
+        // 查询告警信息数量（type=2的记录）
+        LambdaQueryWrapper<DeviceOperationLog> alarmWrapper = new LambdaQueryWrapper<DeviceOperationLog>()
+                .eq(DeviceOperationLog::getDeleted, 0)
+                .eq(DeviceOperationLog::getType, 2);
+        
+        // 获取告警数量
+        long alarmCount = deviceOperationLogDao.selectCount(alarmWrapper);
+        
+        // 设置告警数量
+        statistics.setAlarmCount((int)alarmCount);
+        
+        return statistics;
     }
 }

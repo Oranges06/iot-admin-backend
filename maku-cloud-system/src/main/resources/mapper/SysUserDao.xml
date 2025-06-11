@@ -5,7 +5,9 @@
 
 	<select id="getList" resultType="net.maku.system.entity.SysUserEntity">
 		select t1.*
-			from sys_user t1 where t1.super_admin = 0 and t1.deleted = 0
+			from sys_user t1 
+			inner join sys_user_role t3 on t1.id = t3.user_id and t3.deleted = 0 and t3.role_id = 5
+			where t1.super_admin = 0 and t1.deleted = 0
 		<if test="username != null and username.trim() != ''">
 			and t1.username = #{username}
 		</if>

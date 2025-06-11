@@ -56,10 +56,10 @@ public class DeviceServiceImpl extends BaseServiceImpl<DeviceDao, Device> implem
         // 设备类型映射表
         Map<Integer, String> typeMap = new HashMap<>();
         typeMap.put(1, "灯");
-        typeMap.put(2, "温湿度传感器");
+        typeMap.put(2, "风扇");
         typeMap.put(3, "蜂鸣器");
-        typeMap.put(4, "红外传感器");
-        typeMap.put(5, "风扇");
+        typeMap.put(4, "温湿度");
+        typeMap.put(5, "人体红外");
         typeMap.put(6, "光敏");
         
         // 创建基础查询条件：只查询未删除的设备(deleted=0)

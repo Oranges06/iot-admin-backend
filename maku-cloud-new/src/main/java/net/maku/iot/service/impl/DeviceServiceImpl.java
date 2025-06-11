@@ -4,8 +4,12 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.AllArgsConstructor;
+import net.maku.app.dao.PackageDeviceDao;
+import net.maku.app.dao.PackageUserDao;
 import net.maku.framework.common.utils.PageResult;
 import net.maku.framework.mybatis.service.impl.BaseServiceImpl;
+import net.maku.framework.security.user.SecurityUser;
+import net.maku.framework.security.user.UserDetail;
 import net.maku.iot.convert.DeviceConvert;
 import net.maku.iot.entity.DeviceEntity;
 import net.maku.iot.query.DeviceQuery;
@@ -21,6 +25,7 @@ import cn.hutool.core.util.ObjectUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,11 +38,35 @@ import java.util.List;
 @AllArgsConstructor
 public class DeviceServiceImpl extends BaseServiceImpl<DeviceDao, DeviceEntity> implements DeviceService {
     private final TransService transService;
+    private final PackageUserDao packageUserDao;
+    private final PackageDeviceDao packageDeviceDao;
 
     @Override
     public PageResult<DeviceVO> page(DeviceQuery query) {
+        // 获取当前登录用户ID
+        UserDetail user = SecurityUser.getUser();
+        if (user != null) {
+            // 根据用户ID查询套餐ID
+            List<Integer> packageIds = packageUserDao.getPackageIdsByUserId(user.getId().intValue());
+            if (packageIds != null && !packageIds.isEmpty()) {
+                // 根据套餐ID查询设备类型
+                List<Integer> deviceTypes = packageDeviceDao.getDeviceTypesByPackageIds(packageIds);
+                if (deviceTypes != null && !deviceTypes.isEmpty()) {
+                    // 设置查询条件，只查询指定类型的设备
+                    LambdaQueryWrapper<DeviceEntity> wrapper = getWrapper(query);
+                    wrapper.in(DeviceEntity::getType, deviceTypes);
+                    wrapper.eq(DeviceEntity::getDeleted, 0);
+                    
+                    IPage<DeviceEntity> page = baseMapper.selectPage(getPage(query), wrapper);
+                    return new PageResult<>(DeviceConvert.INSTANCE.convertList(page.getRecords()), page.getTotal());
+                }
+            }
+            // 如果用户没有关联套餐或套餐没有关联设备类型，返回空结果
+            return new PageResult<>(new ArrayList<>(), 0);
+        }
+        
+        // 如果无法获取当前用户，使用原有逻辑
         IPage<DeviceEntity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
-
         return new PageResult<>(DeviceConvert.INSTANCE.convertList(page.getRecords()), page.getTotal());
     }
 

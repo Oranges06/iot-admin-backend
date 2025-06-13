@@ -1,14 +1,41 @@
-version: '3.9'
+#构建：docker-compose build
+#启动：docker-compose up -d
+
 services:
-  maku-cloud-gateway:
-    image: makunet:1.0
+  iot-cloud-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: maku-cloud-gateway.jar
+    image: maku-cloud-gateway:1.0
     container_name: maku-cloud-gateway
     ports:
-      - 8080:8080
-    volumes:
-      - /work/www/maku-cloud/maku-cloud-gateway.jar:/app/app.jar
-  maku-cloud-system:
-    image: makunet:1.0
+      - 8088:8088
+
+  iot-cloud-system:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: maku-cloud-system.jar
+    image: maku-cloud-system:1.0
     container_name: maku-cloud-system
-    volumes:
-      - /work/www/maku-cloud/maku-cloud-system.jar:/app/app.jar
+
+  iot-cloud-user:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: maku-cloud-new.jar
+    image: maku-cloud-new:1.0
+    container_name: maku-cloud-new
+
+  iot-cloud-device:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: maku-cloud-screen.jar
+    image: maku-cloud-screen:1.0
+    container_name: iot-cloud-screen

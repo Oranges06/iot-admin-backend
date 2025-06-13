@@ -31,6 +31,13 @@ spring:
             - Path=/app/**
           filters:
             - StripPrefix=1
+        - id: maku-cloud-screen
+          uri: lb://maku-cloud-screen
+          order: 1
+          predicates:
+            - Path=/iot/**
+          filters:
+            - StripPrefix=1
     nacos:
       username: @nacos.username@
       password: @nacos.password@
